@@ -45,21 +45,28 @@
     <DebugSymbols>true</DebugSymbols>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="js\checkmove-modules.js" />
     <Compile Include="js\enum.js" />
     <Compile Include="js\fb.js" />
     <Compile Include="js\fireworks.js" />
+    <Compile Include="js\game-modules.js" />
     <Compile Include="js\initmobile.js" />
     <Compile Include="js\iscando.js" />
     <Compile Include="js\leaderboard2.js" />
     <Compile Include="js\log.js" />
     <Compile Include="js\loseanimation.js" />
     <Compile Include="js\main.js" />
+    <Compile Include="js\merge-modules.js" />
     <Compile Include="js\merge.js" />
+    <Compile Include="js\move-modules.js" />
     <Compile Include="js\move.js" />
+    <Compile Include="js\shift-modules.js" />
     <Compile Include="js\sql.js" />
     <Compile Include="js\treediagram.js" />
+    <Compile Include="js\utility-modules.js" />
     <Compile Include="js\utility.js" />
     <Compile Include="js\view.js" />
+    <Compile Include="js\vue-game-single.js" />
     <Compile Include="js_lib\html2canvas.js" />
     <Compile Include="js_lib\jquery-ui.min.js" />
     <Compile Include="js_lib\jquery.keyframes.min.js" />
@@ -158,7 +165,7 @@
     <Content Include="pages\index3.html" />
     <Content Include="pages\leaderboard.html" />
     <Content Include="pages\leaderboard2.html" />
-    <Content Include="pages\screenshot.html" />
+    <Content Include="pages\vue-game-single.html" />
     <Content Include="README.md" />
     <Content Include="tsconfig.json" />
     <Content Include="typings.json" />

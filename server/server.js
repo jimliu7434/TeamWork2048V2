@@ -25,46 +25,46 @@ app.get('/', function (req, res) {
     res.sendFile(__dirname + '/pages/index3.html');
 });
 
-app.get('/console', function (req, res) {
+app.get('console', function (req, res) {
     res.sendFile(__dirname + '/pages/console.html');
 });
 
-app.get('/index.html', function (req, res) {
+app.get('index.html', function (req, res) {
     res.sendFile(__dirname + '/pages/index.html');
 });
 
-app.get('/index2.html', function (req, res) {
+app.get('index2.html', function (req, res) {
     res.sendFile(__dirname + '/pages/index2.html');
 });
 
-app.get('/index3.html', function (req, res) {
+app.get('index3.html', function (req, res) {
     res.sendFile(__dirname + '/pages/index3.html');
 });
 
-app.get('/game2048single', function (req, res) {
+app.get('game2048single', function (req, res) {
     res.sendFile(__dirname + '/pages/game2048single.html');
 });
 
-app.get('/game2048battle', function(req, res) {
+app.get('game2048battle', function(req, res) {
     res.sendFile(__dirname + '/pages/game2048.html');
 });
 
-app.get('/game2048viewer', function(req, res) {
+app.get('game2048viewer', function(req, res) {
     res.sendFile(__dirname + '/pages/game2048viewer.html');
 });
 
-app.get('/leaderboard', function(req, res) {
+app.get('leaderboard', function(req, res) {
     res.sendFile(__dirname + '/pages/leaderboard2.html');
 });
 
-app.post('/getleaderboarddata', function(req, res) {
+app.post('getleaderboarddata', function(req, res) {
     var rowcount = req.body.rowcount;
     var mapsize = req.body.mapsize;
 
     getLeaderboard(res, rowcount, mapsize);
 });
 
-app.post('/addleaderboarddata', function (req, res) {
+app.post('addleaderboarddata', function (req, res) {
     var data = {
         score: parseInt(req.body.score),
         mapsize: parseInt(req.body.size),
@@ -78,7 +78,7 @@ app.post('/addleaderboarddata', function (req, res) {
     });
 });
 
-app.post('/getscreenshot', function(req, res) {
+app.post('getscreenshot', function(req, res) {
     var ssid = parseInt(req.body.ssid);
 
     sql.getScreenshotByssid({
@@ -89,7 +89,7 @@ app.post('/getscreenshot', function(req, res) {
 
 });
 
-app.post('/addscreenshot', function(req, res) {
+app.post('addscreenshot', function(req, res) {
     var lbid = parseInt(req.body.lbid);
     var datatype = parseInt(req.body.datatype);
     var data = req.body.data;
@@ -103,7 +103,7 @@ app.post('/addscreenshot', function(req, res) {
     });
 });
 
-app.post('/getfunctionstreedata', function (req, res) {
+app.post('getfunctionstreedata', function (req, res) {
     res.sendFile(__dirname + '/intro/functionstree.json');
 });
 
