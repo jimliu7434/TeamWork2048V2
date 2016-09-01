@@ -1,0 +1,554 @@
+﻿$box-width: 50px;
+$box-height: 50px;
+$box2-width: 36px;
+$box2-height: 36px;
+$box-radius: 4px;
+$box-margin: 5px;
+$box-background:#776E65;
+$border-color:#BBADA0;
+$box-border-width:2px;
+$root-background:#FAF8EF;
+
+
+$player1-main-color:#BB4444;
+$player2-main-color:#50798B;
+
+$smallbox-width:30px;
+$main-width:$box-width*4+$box-border-width*7;
+$text-color: #776E65;
+
+$bottom-box-width:100px;
+$bottom-box-height:30px;
+$button-active-color:#7C6958;
+
+
+$box-width-viewer:70px;
+$box-height-viewer:70px;
+
+html, body {  
+  margin: 0;
+  padding: 0;
+  
+  font-family: "Clear Sans", "Helvetica Neue", Arial, sans-serif;
+  font-size: 18px;
+  text-align:center;
+  display:inline-block;
+}
+
+.main-contain{
+  text-align:center;
+}
+
+//上一步和重玩按鈕的狀態
+.back-button{
+    background:$player1-main-color;
+    border-radius: $box-radius;
+    border:$box-border-width solid $border-color;
+    padding:0;
+    cursor:pointer;
+    border-color:$player1-main-color;
+}
+.back-button:active{
+    background:$button-active-color;
+    border-radius: $box-radius;
+    border:$box-border-width solid $border-color;
+    border-color:$player1-main-color;
+}
+.back-button:disabled{    
+    opacity: 0.75; 
+    cursor: not-allowed;
+    background:$border-color;
+}
+
+//base css
+.box-body{
+    border-color:$border-color;
+    border-width:$box-border-width;
+    border-style:solid;
+    border-radius: $box-radius;
+    z-index:1;
+}
+
+ .base-border{
+     border-width:$box-border-width;
+     border-style:solid;
+     border-radius: $box-radius;
+     height:$box-height;
+ }
+ //分數 score base css
+ .base-box-score{
+     @extend .base-border;
+     .score-title
+     {
+        height:$box-height/2;
+        line-height:$box-height/2;
+        font-size:10px;
+        content:"Score";
+        margin:auto;
+        color:white;
+     }
+     .score-content
+     {
+        height:$box-height/2;
+        margin:auto;
+        font-weight: bold;
+        color:white;
+     }
+}
+
+.box-row-border{
+    z-index:3;
+    width: $box-border-width;
+    height: $box-height;
+    background: $border-color;
+    text-align:center;
+    float: left;
+    border-width:0px;
+    position:relative;
+}
+
+.box-column-border{
+    z-index:3;
+    height: $box-border-width;
+    background: $border-color;
+    text-align:center;
+    border-width:0px;
+    position:relative;
+}
+
+//player 1 object css  ------  start
+//主要矩陣的邊框
+.play1-box-column-border{
+    @extend .box-column-border;
+    width:$box-width*4 + 4*$box-border-width + 2px;
+    background:$player1-main-color;
+}
+//主要矩陣的邊框
+.play1-box-row-border{
+    @extend .box-row-border;
+    height: $box-height;
+    background:$player1-main-color;
+}
+//主要矩陣的邊框
+#play1-box-body{
+    @extend .box-body;
+    border-color:$player1-main-color;
+}
+//player 1 分數
+ #player1-score{
+     @extend .base-box-score;
+     background:$player1-main-color;
+     border-color:$player1-main-color;
+     float:left;
+      width:21%;
+ }
+ //player 1 名稱
+ #player1-name{
+     @extend .base-border;
+     background:$player1-main-color;
+     border-color:$player1-main-color;
+     float:left;
+     width:27%;
+     margin-left:2px;
+     padding:0px;
+     text-align:center;
+     line-height:50px;
+ }
+ .box{
+    z-index:3;
+    width: $box-width;
+    height: $box-height;
+    text-align:center;
+    float: left;
+    border-color:$border-color;
+    border-width:0px;
+    border-style:solid;
+    position:relative;
+}
+//player 1 object css ------  end
+
+
+
+
+
+//player 2 object css  ------  start
+.play2-box-column-border{
+    @extend .box-column-border;
+    width:$box2-width*4 + 4*$box-border-width + 2px;
+    background:$player2-main-color;
+}
+
+.play2-box-row-border{
+    @extend .box-row-border;
+    height: $box2-height;
+    background:$player2-main-color;
+}
+
+#play2-box-body{
+    @extend .box-body;
+    border-color:$player2-main-color;
+}
+//player 2 分數
+ #player2-score{
+     @extend .base-box-score;
+     background:$player2-main-color;
+     border-color:$player2-main-color;
+     float:left;
+      width:46%;
+      margin-bottom:1px;
+ }
+ //player 2 名稱
+ #player2-name{
+     @extend .base-border;
+     background:$player2-main-color;
+     border-color:$player2-main-color;
+     float:left;
+     width:47%;
+     margin-left:2px;
+     margin-bottom:1px;
+ }
+
+ .box2{
+    z-index:3;
+    width: $box2-width;
+    height: $box2-height;
+    text-align:center;
+    float: left;
+    border-color:$border-color;
+    border-width:0px;
+    border-style:solid;
+    position:relative;
+}
+
+ .box2-number{
+     margin-top:8px;
+ }
+//player 2 object css ------  end
+
+
+
+
+
+//player 2 viewer object css  ------  start
+.play2viewer-box-column-border{
+    @extend .box-column-border;
+    width:$box-width-viewer*4 + 4*$box-border-width + 2px;
+    background:$player2-main-color;
+}
+.play2viewer-box-row-border{
+    @extend .box-row-border;
+    height: $box-height-viewer;
+    background:$player2-main-color;
+}
+
+.play1viewer-box-column-border{
+    @extend .box-column-border;
+    width:$box-width-viewer*4 + 4*$box-border-width + 2px;
+    background:$player1-main-color;
+}
+.play1viewer-box-row-border{
+    @extend .box-row-border;
+    height: $box-height-viewer;
+    background:$player1-main-color;
+}
+
+#play1viewerdivcss{
+    float:left;
+}
+#play2viewerdivcss{
+    float:left;
+}
+.box2viewer{
+    z-index:3;
+    width: $box-width-viewer;
+    height: $box-height-viewer;
+    text-align:center;
+    float: left;
+    border-color:$border-color;
+    border-width:0px;
+    border-style:solid;
+    position:relative;
+}
+.box1viewer{
+    z-index:3;
+    width: $box-width-viewer;
+    height: $box-height-viewer;
+    text-align:center;
+    float: left;
+    border-color:$border-color;
+    border-width:0px;
+    border-style:solid;
+    position:relative;
+}
+#player1viewer-score{
+     @extend .base-box-score;
+     background:$player1-main-color;
+     border-color:$player1-main-color;
+     float:left;
+      width:46%;
+      margin-bottom:1px;
+ }
+//player 1 名稱
+ #player1viewer-name{
+     @extend .base-border;
+     background:$player1-main-color;
+     border-color:$player1-main-color;
+     float:left;
+     width:50%;
+     margin-left:2px;
+     margin-bottom:1px;
+ }
+
+ //倒數計時器
+ #timerviewer-div{
+     @extend .base-border;
+     width:50%;
+     margin: 0px auto;
+     background:$border-color;
+     border-color:$border-color;
+     margin-bottom:5px;
+     #gametimespanviewer{
+         font-size:xx-large;
+         font-weight:bold;
+         margin-top:8px;
+    }
+ }
+ //player 2 名稱
+ #player2viewer-name{
+     @extend .base-border;
+     background:$player2-main-color;
+     border-color:$player2-main-color;
+     float:left;
+     width:50%;
+     margin-left:2px;
+     margin-bottom:1px;
+ }
+
+//player 2 viewer object css ------  end
+ 
+
+.box-row{
+    z-index:2;
+  text-align:center;
+  background-color:#CDC1B4;
+  &:after {
+      content: "";
+      display: block;
+      clear: both;
+    }
+}
+
+.mask-body{
+    width:$main-width;
+    height:$main-width;
+    background-color:rgba(20%,10%,0%,0.3);
+    z-index:100;
+    line-height:$main-width;
+    margin:0 auto;
+    position:absolute;
+    border-radius: $box-radius;
+    /*margin-top:65px;
+    margin-left:($main-width/2) * (-1);
+    line-height:($main-width/2) + 30;*/
+}
+
+
+
+ 
+
+ 
+
+ 
+ 
+
+ //倒數計時器
+ #timer-div{
+     @extend .base-border;
+     width:41%;
+     background:$border-color;
+     border-color:$border-color;
+     margin-bottom:2px;
+     margin-left:2px;
+     float:right;
+     #gametimespan{
+         font-size:xx-large;
+         font-weight:bold;
+         margin-top:8px;
+    }
+ }
+ 
+ #gamemsgspan{
+     @extend .base-border;
+     float:left;
+     margin-top:2px;
+     width:70%;
+     height:30px;
+     line-height:30px;
+     background:$border-color;
+     border-color:$border-color;
+ }
+
+ 
+
+ #play1divcss{
+     float:left;
+ }
+
+#play1divcss:before,
+#play1divcss:after {
+  content: "";
+  display:table;
+}
+#play1divcss:after {
+  clear: both;
+}
+#play1divcss {
+  *zoom: 1; /*For IE 6&7 only*/
+}
+
+
+
+ #play2divcss{
+      margin-left:2px;
+      float:left;
+ }
+
+
+ #readybtn{
+	box-shadow:inset 0px 1px 0px 0px #a6827e;
+	background:linear-gradient(to bottom, #7d5d3b 5%, #634b30 100%);
+	filter:progid:DXImageTransform.Microsoft.gradient(startColorstr='#7d5d3b', endColorstr='#634b30',GradientType=0);
+	background-color:#7d5d3b;
+	border-radius:3px;
+	border:1px solid #54381e;
+	display:inline-block;
+	cursor:pointer;
+	color:#ffffff;
+	font-family:Arial;
+	font-size:13px;
+	
+	text-decoration:none;
+	text-shadow:0px 1px 0px #4d3534;
+
+    float:left;
+     margin-top:4px;
+     margin-left:2px;
+     width:28%;
+     height:30px;
+     
+}
+#readybtn:hover {
+	background:linear-gradient(to bottom, #634b30 5%, #7d5d3b 100%);
+	filter:progid:DXImageTransform.Microsoft.gradient(startColorstr='#634b30', endColorstr='#7d5d3b',GradientType=0);
+	background-color:#634b30;
+}
+#readybtn:active {
+	position:relative;
+	top:1px;
+}
+
+#readybtn:disabled{
+    opacity: 0.75;
+    cursor: not-allowed;
+}
+
+.css_table {
+      display:table;
+    }
+    .css_tr {
+          display: table-row;
+      }
+    .css_td {
+          display: table-cell;
+          text-align:left;
+          
+    }
+    .css_td span {
+        margin-right: 1em;
+    }
+
+
+.rainbow-text {
+    font-family: 'Bangers', cursive;
+    letter-spacing: 0px;
+    text-shadow: 3px 3px 120px rgba(255, 255, 255, .65), 2px 2px 2px rgba(255, 255, 255, .5);
+    position: absolute;
+    float:initial;
+    /*right: 50%;*/
+    //align-content:center;
+    margin-left:100px;
+   z-index:100; 
+   top:30%;
+    transform: translateY(-50%);
+}
+ //縮放到480px以下，UI調整
+ @media only screen and (max-width: 480px){
+ #Str2048id{
+     margin:0px;
+ }
+ #roomid{
+     margin:0px;
+ }
+
+#timer-div{
+    float:none;
+    width:98%;
+}
+#player1-score{
+    width:41%;
+}
+#player1-name{
+    width:41%;
+}
+ #play1divcss{
+    float:none;
+    margin-top:57px;
+}
+
+ #play2divcss{
+    float:none;
+    margin-top:2px;
+}
+ #play2-box-body{
+     display:none;
+ }
+
+ #player2-name{
+     width:49%;
+ }
+ #readybtn{
+     width:98%;
+     background-color:red;
+ }
+ #gamemsgspan{
+     width:98%;
+     float:none;
+ }
+ .rainbow-text {
+     margin-left:0px;
+     bottom:30%;
+ }
+ 
+}
+ 
+#capture-range-div:before,
+#capture-range-div:after {
+  content: "";
+  display:table;
+}
+#capture-range-div:after {
+  clear: both;
+}
+#capture-range-div {
+  *zoom: 1; /*For IE 6&7 only*/
+}
+
+ 
+
+ /*section {
+    text-align: center;
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    z-index:1;
+}*/

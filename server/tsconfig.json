@@ -1,0 +1,13 @@
+﻿{
+  "compileOnSave": true,
+  "compilerOptions": {
+    "rootDir": "ts/",
+    "outDir": "js_out/",
+    "sourceMap": false
+  },
+  "files": [
+   
+  ]
+
+
+}
