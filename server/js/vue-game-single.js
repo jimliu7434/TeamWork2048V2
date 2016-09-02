@@ -1,10 +1,4 @@
 ﻿/// <reference path="../node_modules/@types/vue/index.d.ts"/>
-var moveModule = require('move-modules.js');
-var utilityModule = require('utility-modules.js');
-
-//directions enum
-var DIREC = utilityModule.DirecEnum();
-
 
 
 var cellComponent = Vue.extend({
@@ -25,11 +19,13 @@ var mapComponent = Vue.extend({
     props: ["items", "size"],
     computed: {
         mapItems: function () {
-            var map = [];
-            this.items.forEach(function(item) {
-                map[item.Y][item.X] = item;
-            });
 
+            var map = [];
+            if (this.items) {
+                this.items.forEach(function(item) {
+                    map[item.y][item.x] = item;
+                });
+            }
             return map;
         }
     },
@@ -38,7 +34,7 @@ var mapComponent = Vue.extend({
     }
 });
 
-Vue.components('gmap', mapComponent);
+Vue.component('gmap', mapComponent);
 
 var vm = new Vue({
     el: "#gbody",
@@ -49,39 +45,163 @@ var vm = new Vue({
         disableRollback: true,
         disableReset: true,
         map: undefined,
-        prevmap: undefined
+        //prevmap: undefined,
+        socket: undefined
     },
     methods: {
-        reset: function() {
-            if (moveModule.reset(map, prevmap, size)) {
-                this.disableRollback = true;
-                this.disableReset = true;
+        reset: function () {
+            if (this.socket) {
+                this.socket.emit('reset', { size: this.size });
             }
         },
         rollback: function() {
-            if (moveModule.rollback(map, prevmap, size)) {
-                this.disableRollback = true;
+            if (this.socket) {
+                this.socket.emit('rollback');
             }
         },
-        moveup : function(map, prevmap, size) {
-            if (moveModule.move(map, prevmap, DIREC.U, size)) {
-                this.diableRollback = false;
+        moveup : function() {
+            if (this.socket) {
+                this.socket.emit('up');
             }
         },
-        movedown : function (map, prevmap, size) {
-            if (moveModule.move(map, prevmap, DIREC.D, size)) {
-                this.diableRollback = false;
+        movedown : function () {
+            if (this.socket) {
+                this.socket.emit('down');
             }
         },
-        moveleft : function (map, prevmap, size) {
-            if (moveModule.move(map, prevmap, DIREC.L, size)) {
-                this.diableRollback = false;
+        moveleft : function () {
+            if (this.socket) {
+                this.socket.emit('left');
             }
         },
-        moveright : function (map, prevmap, size) {
-            if (moveModule.move(map, prevmap, DIREC.R, size)) {
-                this.diableRollback = false;
+        moveright : function () {
+            if (this.socket) {
+                this.socket.emit('right');
+            }
+        },
+        test: function(data) {
+            if (this.socket) {
+                this.socket.emit('test', { data: data });
             }
         }
     }
 });
+
+$(document).ready(function() {
+    document.onkeydown = keyFunction;
+
+    //使用行動裝置
+    initMobile();
+
+    initMoveSocketEvents();
+});
+
+
+function initMoveSocketEvents() {
+    if (!vm)
+        return;
+
+    var model = vm.$data;
+    model.socket = io();
+    var socket = vm.$data.socket;
+
+    socket.on("reset", function (data) {
+        var isMoved = data.isMoved;
+        var nmap = data.map;
+        
+        if (isMoved) {
+            //ui 處理
+            model.map = nmap;
+            model.disableRollback = true;
+            model.disableReset = true;
+        }
+    });
+    
+    socket.on('rollback', function(data) {
+        var isMoved = data.isMoved;
+        var nmap = data.map;
+        
+        if (isMoved) {
+            //ui 處理
+            model.map = nmap;
+            model.disableRollback = true;
+        }
+    });
+    
+    socket.on('up', function(data) {
+        onMoveCompleted(data);
+    });
+    
+    socket.on('down', function(data) {
+        onMoveCompleted(data);
+    });
+    
+    socket.on('left', function(data) {
+        onMoveCompleted(data);
+    });
+    
+    socket.on('right', function(data) {
+        onMoveCompleted(data);
+    });
+}
+
+function onMoveCompleted(data) {
+    var model = vm.$data;
+    
+    var isMoved = data.isMoved;
+    var nmap = data.map;
+    
+    if (isMoved) {
+        //ui 處理
+        model.map = nmap;
+        model.disableRollback = true;
+    }
+    
+    //game over 處理
+    if (model.map.isgameover) {
+        //todo:
+    }
+}
+
+function initMobile() {
+    if (/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)) {
+        $(document).on("swipeleft", function () {
+            if (isCanSendKey()) {
+                vm.moveleft();
+            }
+        });
+        
+        $(document).on("swiperight", function () {
+            if (isCanSendKey()) {
+                vm.moveright();
+            }
+        });
+        
+        $(document).on("swipeup", function () {
+            if (isCanSendKey()) {
+                vm.moveup();
+            }
+        });
+        $(document).on("swipedown", function () {
+            if (isCanSendKey()) {
+                vm.movedown();
+            }
+        });
+    }
+}
+
+function isCanSendKey() {
+    return isCanClick ;
+}
+
+function keyFunction() {
+    if (event.keyCode === 37 && isCanSendKey()) {
+        vm.moveleft();
+    } else if (event.keyCode === 38 && isCanSendKey()) {
+        vm.moveup();
+    } else if (event.keyCode === 39 && isCanSendKey()) {
+        vm.moveright();
+    } else if (event.keyCode === 40 && isCanSendKey()) {
+        vm.movedown();
+    }
+}

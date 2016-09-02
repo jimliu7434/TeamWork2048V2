@@ -2,7 +2,7 @@
   "name": "server",
   "version": "0.0.0",
   "description": "server",
-  "main": "server.js",
+  "main": "server1.js",
   "keywords": [
     "socketio",
     "nodejs"
@@ -16,7 +16,6 @@
     "body-parser": "1.15.2",
     "express": "^4.14.0",
     "mssql": "3.3.0",
-    "socket.io": "*",
-    "browserify": "13.1.0"
+    "socket.io": "*"
   }
 }

@@ -15,7 +15,7 @@
     <SchemaVersion>2.0</SchemaVersion>
     <ProjectGuid>9b2f560b-fcac-43fa-911a-16bbadf4a3e2</ProjectGuid>
     <ProjectHome>.</ProjectHome>
-    <StartupFile>server.js</StartupFile>
+    <StartupFile>server1.js</StartupFile>
     <SearchPath>
     </SearchPath>
     <WorkingDirectory>.</WorkingDirectory>
@@ -45,25 +45,26 @@
     <DebugSymbols>true</DebugSymbols>
   </PropertyGroup>
   <ItemGroup>
-    <Compile Include="js\checkmove-modules.js" />
+    <Compile Include="js_serv\checkmove-modules.js" />
     <Compile Include="js\enum.js" />
     <Compile Include="js\fb.js" />
     <Compile Include="js\fireworks.js" />
-    <Compile Include="js\game-modules.js" />
+    <Compile Include="js_serv\gamedata-modules.js" />
     <Compile Include="js\initmobile.js" />
     <Compile Include="js\iscando.js" />
     <Compile Include="js\leaderboard2.js" />
     <Compile Include="js\log.js" />
     <Compile Include="js\loseanimation.js" />
     <Compile Include="js\main.js" />
-    <Compile Include="js\merge-modules.js" />
+    <Compile Include="js_serv\merge-modules.js" />
     <Compile Include="js\merge.js" />
-    <Compile Include="js\move-modules.js" />
+    <Compile Include="js_serv\move-modules.js" />
     <Compile Include="js\move.js" />
-    <Compile Include="js\shift-modules.js" />
+    <Compile Include="js_serv\shift-modules.js" />
     <Compile Include="js\sql.js" />
     <Compile Include="js\treediagram.js" />
-    <Compile Include="js\utility-modules.js" />
+    <Compile Include="js_serv\socket.js" />
+    <Compile Include="js_serv\utility-modules.js" />
     <Compile Include="js\utility.js" />
     <Compile Include="js\view.js" />
     <Compile Include="js\vue-game-single.js" />
@@ -72,6 +73,7 @@
     <Compile Include="js_lib\jquery.keyframes.min.js" />
     <Compile Include="js_lib\jquery.mobile-1.4.5.min.js" />
     <Compile Include="server.js" />
+    <Compile Include="server1.js" />
     <Compile Include="webpack.config.js" />
     <Content Include="compilerconfig.json" />
     <Content Include="compilerconfig.json.defaults">
@@ -181,6 +183,7 @@
     <Folder Include="js\" />
     <Folder Include="js_lib\" />
     <Folder Include="js_out\" />
+    <Folder Include="js_serv\" />
     <Folder Include="ts\" />
     <Folder Include="pages\" />
     <Folder Include="typings\" />
