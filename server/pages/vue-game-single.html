@@ -11,30 +11,32 @@
 <div id="gbody">
     <input type="button" id="resetbtn" v-on:click="reset" :disabled="disableReset" value="RESET"/>
     <input type="button" id="rollbackbtn" v-on:click="rollback" :disabled="disableRollback" value="ROLLBACK"/>
-
-    <gmap :items="map" :size="size"></gmap>
+    <div>
+        <span>Score:</span><span> {{ map ? map.score : 0 }} </span>
+    </div>
+    <gmap :source="map" :size="size"></gmap>
 </div>
 
 
     <template id="map-component-template">
         <div class="table">
-            <template v-for="item of mapItems">
-                <row :items="item"></row>
+            <template v-for="item of items" track-by="$index">
+                <row :source="item" :size="size"></row>
             </template>
         </div>
     </template>
 
     <template id="row-component-template">
         <div class="row">
-            <template v-for="item of items">
-                <cell :item="item"></cell>
+            <template v-for="item of items" track-by="$index">
+                <cell :source="item"></cell>
             </template>
         </div>
     </template>
 
     <template id="cell-component-template">
         <div class="cell1">
-            <span>{{ item.Value }}</span>
+            <span>{{ item.value }}</span>
         </div>
     </template>
 
@@ -43,7 +45,7 @@
     <script src="https://npmcdn.com/vue/dist/vue.js"></script>
     <script src="/socket.io/socket.io.js"></script>
     <script src="/js/initmobile.js"></script>
-    <script src="/js/vue-game-single.js" ></script>
+    <script src="/js/vue-game-single.js?0222" ></script>
 
 </body>
 </html>

@@ -3,12 +3,36 @@
 
 var cellComponent = Vue.extend({
     template: "#cell-component-template",
-    props:["item"]
+    props: ["source"],
+    computed: {
+        item: function() {
+            if (this.source) {
+                return this.source;
+            }
+            return { value: 0 };
+        }
+    }
 });
 
 var rowComponent = Vue.extend({
     template: "#row-component-template",
-    props: ["items"],
+    props: ["source", "size"],
+    computed: {
+        items: function () {
+            if (!this.size) {
+                return undefined;
+            }
+
+            var map = [];
+            for (var i = 0; i < this.size; i++) {
+                map.push(undefined);
+            }
+            this.source.forEach(function(item) {
+                map[item.x] = item;
+            });
+            return map;
+        }  
+    },
     components: {
         'cell': cellComponent
     }
@@ -16,14 +40,24 @@ var rowComponent = Vue.extend({
 
 var mapComponent = Vue.extend({
     template: "#map-component-template",
-    props: ["items", "size"],
+    props: ["source", "size"],
     computed: {
-        mapItems: function () {
+        items: function () {
+            if (!this.size) {
+                return undefined;
+            }
 
             var map = [];
-            if (this.items) {
-                this.items.forEach(function(item) {
-                    map[item.y][item.x] = item;
+            for (var i = 0; i < this.size; i++) {
+                map.push([]);
+            }
+
+            if (this.source) {
+                this.source.items.forEach(function (item) {
+                    if (!map[item.y])
+                        map[item.y] = [];
+
+                    map[item.y].push(item);
                 });
             }
             return map;
@@ -43,7 +77,7 @@ var vm = new Vue({
         size: 4,
         isCanClick: true,
         disableRollback: true,
-        disableReset: true,
+        disableReset: false,
         map: undefined,
         //prevmap: undefined,
         socket: undefined
@@ -51,32 +85,32 @@ var vm = new Vue({
     methods: {
         reset: function () {
             if (this.socket) {
-                this.socket.emit('reset', { size: this.size });
+                this.socket.emit('reset', {});
             }
         },
         rollback: function() {
             if (this.socket) {
-                this.socket.emit('rollback');
+                this.socket.emit('rollback', {});
             }
         },
         moveup : function() {
             if (this.socket) {
-                this.socket.emit('up');
+                this.socket.emit('up', {});
             }
         },
         movedown : function () {
             if (this.socket) {
-                this.socket.emit('down');
+                this.socket.emit('down', {});
             }
         },
         moveleft : function () {
             if (this.socket) {
-                this.socket.emit('left');
+                this.socket.emit('left', {});
             }
         },
         moveright : function () {
             if (this.socket) {
-                this.socket.emit('right');
+                this.socket.emit('right', {});
             }
         },
         test: function(data) {
@@ -106,24 +140,20 @@ function initMoveSocketEvents() {
     var socket = vm.$data.socket;
 
     socket.on("reset", function (data) {
-        var isMoved = data.isMoved;
-        var nmap = data.map;
-        
-        if (isMoved) {
+        if (data.result === 0) {
             //ui 處理
-            model.map = nmap;
+            model.map = data.maps.map;
+            //model.prevmap = data.maps.prevmap;
             model.disableRollback = true;
             model.disableReset = true;
         }
     });
     
     socket.on('rollback', function(data) {
-        var isMoved = data.isMoved;
-        var nmap = data.map;
-        
-        if (isMoved) {
+        if (data.result === 0) {
             //ui 處理
-            model.map = nmap;
+            model.map = data.maps.map;
+            //model.prevmap = data.maps.prevmap;
             model.disableRollback = true;
         }
     });
@@ -147,18 +177,19 @@ function initMoveSocketEvents() {
 
 function onMoveCompleted(data) {
     var model = vm.$data;
+  
+    var nmap = data.maps.map;
     
-    var isMoved = data.isMoved;
-    var nmap = data.map;
-    
-    if (isMoved) {
+    if (data.result === 0) {
         //ui 處理
         model.map = nmap;
-        model.disableRollback = true;
+        //model.prevmap = data.maps.prevmap;
+        model.disableReset = false;
+        model.disableRollback = false;
     }
     
     //game over 處理
-    if (model.map.isgameover) {
+    if (nmap.isgameover) {
         //todo:
     }
 }
@@ -191,7 +222,7 @@ function initMobile() {
 }
 
 function isCanSendKey() {
-    return isCanClick ;
+    return true ;
 }
 
 function keyFunction() {
