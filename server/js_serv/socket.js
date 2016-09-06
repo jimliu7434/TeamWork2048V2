@@ -40,10 +40,6 @@ Modules.prototype.init = function(server) {
             if (data) {
                 // do [rollback] calculate
                 if (moveModule.rollback(data.map, data.prevmap)) {
-                    console.log(data.prevmap);
-                    console.log("-------------------------------------------");
-                    // save result to gamedata
-                    //gamedata.addData(socket, data.map, data.prevmap);
                     // send to client
                     socket.emit("rollback", {
                         result: 0,
@@ -68,9 +64,6 @@ Modules.prototype.init = function(server) {
             if (data) {
                 // do [move] calculate
                 if (moveModule.move(data.map, data.prevmap, DIRECT.U)) {
-                    console.log("-------------------------------------------");                    
-                    // save result to gamedata
-                    //gamedata.addData(socket, data.map, data.prevmap);
                     // send to client
                     socket.emit("up", {
                         result: 0,
@@ -94,9 +87,6 @@ Modules.prototype.init = function(server) {
             if (data) {
                 // do [move] calculate
                 if (moveModule.move(data.map, data.prevmap, DIRECT.D)) {
-                    console.log("-------------------------------------------");
-                    // save result to gamedata
-                    //gamedata.addData(socket, data.map, data.prevmap);
                     // send to client
                     socket.emit("down", {
                         result: 0,
@@ -120,9 +110,6 @@ Modules.prototype.init = function(server) {
             if (data) {
                 // do [move] calculate
                 if (moveModule.move(data.map, data.prevmap, DIRECT.L)) {
-                    console.log("-------------------------------------------");
-                    // save result to gamedata
-                    //gamedata.addData(socket, data.map, data.prevmap);
                     // send to client
                     socket.emit("left", {
                         result: 0,
@@ -146,9 +133,6 @@ Modules.prototype.init = function(server) {
             if (data) {
                 // do [move] calculate
                 if (moveModule.move(data.map, data.prevmap, DIRECT.R)) {
-                    console.log("-------------------------------------------");
-                    // save result to gamedata
-                    //gamedata.addData(socket, data.map, data.prevmap);
                     // send to client
                     socket.emit("right", {
                         result: 0,
