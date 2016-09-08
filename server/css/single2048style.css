@@ -1,0 +1,47 @@
+﻿ /* table */
+.table {
+    display: table;
+    border-collapse: separate;
+    border: solid 1px #fff;
+}
+
+/* tr */
+.row {
+    display: table-row;
+   
+}
+
+/* th */
+.cell1 {
+    display: table-cell;
+    width:5em;
+    height: 5em;
+    line-height:5em;
+    border-right: 1px solid #fff;
+    border-bottom: 1px solid #fff;
+    background: #fcd6d6;
+    text-align: center;
+}
+
+
+/* td */
+.cell2 {
+    display: table-cell;
+    width:5em;
+    height: 5em;
+    line-height:5em;
+    border: 1px solid #fff;
+    background: #eff8ff;
+    text-align: center;
+}
+
+
+.cell3 {
+    display: table-cell;
+    width:5em;
+    height: 5em;
+    line-height:5em;
+    border: 1px solid #fff;
+    background: #effff0;
+    text-align: center;
+}

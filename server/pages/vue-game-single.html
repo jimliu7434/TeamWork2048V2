@@ -5,7 +5,7 @@
     <meta charset="utf-8" />
     <title></title>
 
-    <link href="/css/leaderboard.css" rel="stylesheet" />
+    <link href="/css/single2048style.css" rel="stylesheet" />
 </head>
 <body>
 <div id="gbody">
@@ -15,6 +15,9 @@
         <span>Score:</span><span> {{ map ? map.score : 0 }} </span>
     </div>
     <gmap :source="map" :size="size"></gmap>
+    <div>
+        <span> {{ msg }}</span>
+    </div>
 </div>
 
 
@@ -35,7 +38,7 @@
     </template>
 
     <template id="cell-component-template">
-        <div class="cell1">
+        <div class="cell3" v-bind:style="styleObj" >
             <span>{{ item.value === 0 ? " " : item.value }}</span>
         </div>
     </template>

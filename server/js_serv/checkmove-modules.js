@@ -12,7 +12,7 @@ Modules.prototype.isCanMove = function(map, direction) {
     }
 
     // 指定方向Item 是否都已靠緊此方向
-    if (!isCanShift(map, direction)) {
+    if (isCanShift(map, direction)) {
         return true;
     }
 
@@ -20,9 +20,9 @@ Modules.prototype.isCanMove = function(map, direction) {
 };
 Modules.prototype.isGameOver = function(map) {
     if (!isFull(map))
-        return true;
+        return false;
 
-    return isCanMove(map, DIRECT.A);
+    return !this.isCanMove(map, DIRECT.A);
 };
 
 
@@ -150,18 +150,18 @@ function isCanShift(map, direction) {
     //其他 Item 檢查是否可以向指定方向移動 (指定方向之value是否為0)
     
     if (direction === DIRECT.A)
-        return true;
+        return false;
     
     if (map.items.length <= 0)
-        return true;
+        return false;
     
     for (var i = 0; i < map.items.length ; i++) {
-        if (!isItemCanShift(map, direction, map.items[i])) {
-            return false;
+        if (isItemCanShift(map, direction, map.items[i])) {
+            return true;
         }
     }
     
-    return true;
+    return false;
 }
 
 // 根據指定方向 判斷指定 Item 是否可以移動
@@ -171,47 +171,47 @@ function isItemCanShift(map, direction, item) {
     if (direction === DIRECT.U) {
         // 已在最上
         if (item.y === 0)
-            return true;
+            return false;
         
         // 往上找一格有找到 其他 item 的話，表示已靠緊
         nextItem = utility.findByXY(map, item.x , item.y - 1);
         if (nextItem) {
-            return true;
+            return false;
         }
     }
     else if (direction === DIRECT.D) {
         // 已在最下
         if (item.y === SIZE - 1)
-            return true;
+            return false;
         
         // 往下找一格有找到 其他 item 的話，表示已靠緊
         nextItem = utility.findByXY(map, item.x, item.y + 1);
         if (nextItem) {
-            return true;
+            return false;
         }
     }
     else if (direction === DIRECT.L) {
         // 已在最左
         if (item.x === 0)
-            return true;
+            return false;
         
         // 往左找一格有找到 其他 item 的話，表示已靠緊
         nextItem = utility.findByXY(map, item.x - 1, item.y);
         if (nextItem) {
-            return true;
+            return false;
         }
     }
     else if (direction === DIRECT.R) {
         // 已在最右
         if (item.x === SIZE - 1)
-            return true;
+            return false;
         
         // 往右找一格有找到 其他 item 的話，表示已靠緊
         nextItem = utility.findByXY(map, item.x + 1, item.y);
         if (nextItem) {
-            return true;
+            return false;
         }
     }
     
-    return false;
+    return true;
 }

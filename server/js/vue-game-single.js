@@ -10,6 +10,10 @@ var cellComponent = Vue.extend({
                 return this.source;
             }
             return { value: 0 };
+        },
+        styleObj: function() {
+            var color = getColor(this.item.value);
+            return { background: color };
         }
     }
 });
@@ -80,7 +84,8 @@ var vm = new Vue({
         disableReset: false,
         map: undefined,
         //prevmap: undefined,
-        socket: undefined
+        socket: undefined,
+        msg:""
     },
     methods: {
         reset: function () {
@@ -146,6 +151,7 @@ function initMoveSocketEvents() {
             //model.prevmap = data.maps.prevmap;
             model.disableRollback = true;
             model.disableReset = true;
+            model.msg = "";
         }
     });
     
@@ -155,6 +161,7 @@ function initMoveSocketEvents() {
             model.map = data.maps.map;
             //model.prevmap = data.maps.prevmap;
             model.disableRollback = true;
+            model.msg = "";
         }
     });
     
@@ -178,8 +185,11 @@ function initMoveSocketEvents() {
 function onMoveCompleted(data) {
     var model = vm.$data;
   
-    var nmap = data.maps.map;
     
+    if (!data.maps || !data.maps.map)
+        return;
+    
+    var nmap = data.maps.map;
     if (data.result === 0) {
         //ui 處理
         model.map = nmap;
@@ -190,7 +200,7 @@ function onMoveCompleted(data) {
     
     //game over 處理
     if (nmap.isgameover) {
-        //todo:
+        model.msg = "Game Over";
     }
 }
 
@@ -235,4 +245,59 @@ function keyFunction() {
     } else if (event.keyCode === 40 && isCanSendKey()) {
         vm.movedown();
     }
+}
+
+function getColor(value) {
+
+    var r = 238, g = 225, b = 225;
+    
+    if (value <= 0) {
+        return getColorString(238, 225, 225);
+    }
+    else {
+        var lg2 = getLog2(value, 0);
+        if (lg2 === undefined) {
+            return getColorString(238, 225, 225);
+        }
+
+        g = (g - (lg2 * 10) > 0) ? g - (lg2 * 10) : 0;
+        b = (b - (lg2 * 10) > 0) ? b - (lg2 * 10) : 0;
+
+        return getColorString(r, g, b);
+    } 
+    
+    //var color = {
+    //    a0: "#CDC1B4", //205 193 180
+    //    a2: "#EEE4DA", //238 228 218
+    //    a4: "#EEE1C9", //238 225 201
+    //    a8: "#F3B27A", //243 178 122
+    //    a16: "#F69664", //246 150 100
+    //    a32: "#FAA661", //250 166 97
+    //    a64: "#F88363", //248 99 99
+    //    a128: "#FC5D5D", //252 61 61
+    //    a256: "#FC3A2A", //251 48 32
+    //    a512: "#DB160F", //255 22 15
+    //    a1024: "#AB000F", //255 0 15
+    //    a2048: "#8F0000" // 255 0 0
+    //};
+}
+
+function getLog2(value, ans) {
+    if (Math.pow(2, ans) === value) {
+        return ans;
+    }
+    else if (ans >= 50) {
+        return undefined;
+    } 
+    else {
+        return getLog2(value, ans + 1);
+    }
+}
+
+function dec2hex(v) {
+    return (+v).toString(16);
+}
+
+function getColorString(rdec, gdec, bdec) {
+    return "#" + dec2hex(rdec) + dec2hex(gdec) + dec2hex(bdec);
 }

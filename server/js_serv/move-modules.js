@@ -25,7 +25,8 @@ Modules.prototype.move = function(map, prevmap, direction) {
     
 
     // 6. check if game over
-    checkmoveModule.isGameOver(map);
+    if (checkmoveModule.isGameOver(map))
+        map.isgameover = true;
 
     return true;
 };
