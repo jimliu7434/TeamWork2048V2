@@ -25,7 +25,9 @@ app.use('/js_lib', express.static('js_lib'));
 app.get('/pages/single', function (req, res) {
     res.sendFile(__dirname + '/pages/vue-game-single.html');
 });
-
+app.get('/pages/demo', function (req, res) {
+    res.sendFile(__dirname + '/pages/vue-demo.html');
+});
 
 var gameSocketIo = require(__dirname + '/js_serv/socket.js');
 gameSocketIo.init(server);

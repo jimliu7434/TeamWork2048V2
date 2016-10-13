@@ -1,0 +1,199 @@
+﻿<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="utf-8" />
+    <title></title>
+    <link href="/css/single2048style.css" rel="stylesheet" />
+</head>
+<body>
+    <!--
+        <div id="mv-target">
+            <map>
+                <row>
+                    <cell/>....<cell/>
+                </row>
+                .
+                .
+                .
+                .
+                <row>
+                    <cell/>....<cell/>
+                </row>
+            </map>
+        </div>
+    -->
+
+    <div id="my_view">
+        <input type="button" value="RANDOM" v-on:click="randomclicked" />
+        <map-comp v-bind:mapdata="source" />
+    </div>
+
+
+
+
+
+
+
+
+
+
+    <template id="map-comp-template">
+        <div class="table">
+            <template v-for="rowdata of mapdata">
+                <row-comp v-bind:rowdata="rowdata" />
+            </template>
+        </div>
+    </template>
+
+    <template id="row-comp-template">
+        <div class="row">
+            <template v-for="celldata of rowdata">
+                <cell-comp v-bind:celldata="celldata" />
+            </template>
+        </div>
+    </template>
+
+    <template id="cell-comp-template">
+        <div class="cell3" v-bind:style="styleObj">
+            <span> {{ celldata === 0 ? " " : celldata }} </span>
+        </div>
+    </template>
+
+
+    <script src="/js_lib/jquery-1.12.4.min.js"></script>
+    <script src="/js_lib/vue.js"></script>
+    <script>
+        /// <reference path="../node_modules/@types/vue/index.d.ts"/>
+
+        //test data
+        var testData = [[0, 8, 8, 16], [16, 16, 64, 64], [128, 128, 512, 512], [0, 0, 1024, 1024]];
+
+        var myCellComp = Vue.extend({
+            template: "#cell-comp-template",
+            props: ["celldata"],
+            computed: {
+                styleObj: function () {
+                    return { background: getColor(this.celldata) };
+                }
+            }
+        });
+
+        var myRowComp = Vue.extend({
+            template: "#row-comp-template",
+            props: ["rowdata"],
+            components: {
+                "cell-comp": myCellComp
+            }
+        });
+
+        var myMapComp = Vue.extend({
+            template: "#map-comp-template",
+            props: ["mapdata"],
+            components: {
+                "row-comp": myRowComp
+            }
+        });
+
+        Vue.component("map-comp", myMapComp);
+
+        var vm = new Vue({
+            el: "#my_view",
+            data: {
+                source: testData
+            },
+            methods: {
+                randomclicked: function () {
+                    var arr = randArray();
+                    this.source = arr;
+                }
+            }
+        });
+
+
+
+
+
+
+
+
+
+
+
+        function getColor(value) {
+
+            var r = 238, g = 225, b = 225;
+
+            if (value <= 0) {
+                return getColorString(238, 225, 225);
+            }
+            else {
+                var lg2 = getLog2(value, 0);
+                if (lg2 === undefined) {
+                    return getColorString(238, 225, 225);
+                }
+
+                g = (g - (lg2 * 10) > 0) ? g - (lg2 * 10) : 0;
+                b = (b - (lg2 * 10) > 0) ? b - (lg2 * 10) : 0;
+
+                return getColorString(r, g, b);
+            }
+
+            //var color = {
+            //    a0: "#CDC1B4", //205 193 180
+            //    a2: "#EEE4DA", //238 228 218
+            //    a4: "#EEE1C9", //238 225 201
+            //    a8: "#F3B27A", //243 178 122
+            //    a16: "#F69664", //246 150 100
+            //    a32: "#FAA661", //250 166 97
+            //    a64: "#F88363", //248 99 99
+            //    a128: "#FC5D5D", //252 61 61
+            //    a256: "#FC3A2A", //251 48 32
+            //    a512: "#DB160F", //255 22 15
+            //    a1024: "#AB000F", //255 0 15
+            //    a2048: "#8F0000" // 255 0 0
+            //};
+        }
+
+        function getLog2(value, ans) {
+            if (Math.pow(2, ans) === value) {
+                return ans;
+            }
+            else if (ans >= 50) {
+                return undefined;
+            }
+            else {
+                return getLog2(value, ans + 1);
+            }
+        }
+
+        function dec2hex(v) {
+            return (+v).toString(16);
+        }
+
+        function getColorString(rdec, gdec, bdec) {
+            return "#" + dec2hex(rdec) + dec2hex(gdec) + dec2hex(bdec);
+        }
+
+        function randArray() {
+            var size = 4;
+            var a = [];
+            for (var i = 0; i < size; i++) {
+                var a_i = [];
+                for (var j = 0; j < size; j++) {
+                    var pow = Random(0, 10); // 0~1024
+                    var v = Math.pow(2, pow);
+                    a_i.push(v === 1 ? 0 : v);
+                }
+                a.push(a_i);
+            }
+            return a;
+        }
+
+        // 根據設定的最大最小值產生亂數
+        function Random(min, max) {
+            return Math.round(Math.random() * (max - min) + min);
+        }
+    </script>
+</body>
+</html>

@@ -45,6 +45,8 @@
     <DebugSymbols>true</DebugSymbols>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="js_lib\jquery-1.12.4.min.js" />
+    <Compile Include="js_lib\vue.js" />
     <Compile Include="js_serv\checkmove-modules.js" />
     <Compile Include="js\enum.js" />
     <Compile Include="js\fb.js" />
@@ -169,6 +171,7 @@
     <Content Include="pages\leaderboard.html" />
     <Content Include="pages\leaderboard2.html" />
     <Content Include="pages\vue-game-single.html" />
+    <Content Include="pages\vue-demo.html" />
     <Content Include="README.md" />
     <Content Include="tsconfig.json" />
     <Content Include="typings.json" />

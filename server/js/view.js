@@ -344,7 +344,7 @@ function createMitrixDiv(mitrixtype) {
         $(".box-body").append(tmp);
     }
 
-    var lineheight = bigboxwidth / 2 + 30;
+    //var lineheight = bigboxwidth / 2 + 30;
     $(".mask-body").css("width", bigboxwidth);
     $(".mask-body").css("height", bigboxwidth);
     $(".mask-body").css("margin-top", "67px");
